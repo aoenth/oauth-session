@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "URLEncodedForm",
+        "repositoryURL": "https://github.com/loop-software/url-encoded-form",
+        "state": {
+          "branch": null,
+          "revision": "8305b3513c574d226675a1033c14a1fd4f164ae3",
+          "version": "1.0.7"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
