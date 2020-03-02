@@ -160,7 +160,7 @@ extension OAuthSession {
         }
     }
 
-    private func logout() {
+    public func logout() {
         credentialManager.deleteAllItems()
         NotificationCenter.default.post(
             name: OAuthSession.sessionDidExpire,
