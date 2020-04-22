@@ -1,13 +1,6 @@
 import Foundation
 import URLEncodedForm
 
-public enum OAuthError: Error {
-    case invalidCredential
-    case unknown
-    case networkError(Error)
-//    case urlError(URLError)
-}
-
 /// <#Description#>
 public final class OAuthSession {
 //    public typealias OAuthCompletion = (Result<Void, URLEr)

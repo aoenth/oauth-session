@@ -6,3 +6,29 @@
 //
 
 import Foundation
+
+public enum OAuthError: Error {
+    case invalidCredential
+    case unknown
+    case networkError(Error)
+//    case urlError(URLError)
+
+    public var localizedDescription: String {
+        errorDescription!
+    }
+}
+
+extension OAuthError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidCredential:
+            return "Invalid credentials"
+
+        case .unknown:
+            return "An unknown error occured"
+
+        case .networkError:
+            return "Unable to connect to authorization server"
+        }
+    }
+}

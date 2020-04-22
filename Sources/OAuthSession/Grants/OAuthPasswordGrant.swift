@@ -22,7 +22,7 @@ public struct OAuthPasswordGrant: OAuthGrant {
                 "password" : password,
                 "grant_type" : "password",
             ]
-            
+
             if let scope = scope {
                 dict["scope"] = scope
             }
@@ -53,4 +53,3 @@ public struct OAuthPasswordGrant: OAuthGrant {
         self.audience = audience
     }
 }
-
