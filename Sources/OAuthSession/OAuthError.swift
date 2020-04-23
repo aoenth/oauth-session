@@ -10,8 +10,7 @@ import Foundation
 public enum OAuthError: Error {
     case invalidCredential
     case unknown
-    case networkError(Error)
-//    case urlError(URLError)
+    case urlError(URLError)
 
     public var localizedDescription: String {
         errorDescription!
@@ -27,7 +26,7 @@ extension OAuthError: LocalizedError {
         case .unknown:
             return "An unknown error occured"
 
-        case .networkError:
+        case .urlError:
             return "Unable to connect to authorization server"
         }
     }

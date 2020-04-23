@@ -53,7 +53,7 @@ extension OAuthSession {
         let request = makeTokenRequest(parameters: parameters)
         let task = urlSession.dataTask(with: request) { (data, response, error) in
             guard let data = data, let response = response as? HTTPURLResponse else {
-                return completion(.failure(.networkError(error!)))
+                return completion(.failure(.urlError(error as! URLError)))
             }
 
             guard response.statusCode == 200 else {
