@@ -57,7 +57,7 @@ extension OAuthSession {
             }
 
             guard response.statusCode == 200 else {
-                if response.statusCode == 401 {
+                if response.statusCode == 403 {
                     completion(.failure(.invalidCredential))
                 } else {
                     completion(.failure(.unknown))
