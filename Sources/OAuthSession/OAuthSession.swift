@@ -60,7 +60,7 @@ extension OAuthSession {
                 if response.statusCode == 403 {
                     completion(.failure(.invalidCredential))
                 } else {
-                    completion(.failure(.unknown))
+                    completion(.failure(.unknown(response)))
                 }
                 return
             }
@@ -73,7 +73,11 @@ extension OAuthSession {
                 self.credentialManager.persist(credential: credential)
                 completion(.success(credential))
             } catch {
-                completion(.failure(.unknown))
+                let error = OAuthError.credentialDecodeFailure(
+                    data,
+                    error: error as! DecodingError
+                )
+                completion(.failure(error))
             }
         }
 
