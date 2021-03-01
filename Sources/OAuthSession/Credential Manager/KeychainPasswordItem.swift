@@ -15,6 +15,7 @@ public struct KeychainPasswordItem {
         case noPassword
         case unexpectedPasswordData
         case unexpectedItemData
+        case platformNotSupported
         case unhandledError(status: OSStatus)
     }
     
@@ -54,12 +55,12 @@ public struct KeychainPasswordItem {
         
         // Check the return status and throw an error if appropriate.
         guard status != errSecItemNotFound else { throw KeychainError.noPassword }
+
+        guard status != errSecMissingEntitlement else {
+            throw KeychainError.platformNotSupported
+        }
+
         guard status == noErr else {
-            if #available(iOS 11.3, *) {
-                debugPrint(SecCopyErrorMessageString(status, nil))
-            } else {
-                // Fallback on earlier versions
-            }
             throw KeychainError.unhandledError(status: status)
         }
         
@@ -91,11 +92,6 @@ public struct KeychainPasswordItem {
             
             // Throw an error if an unexpected status was returned.
             guard status == noErr else {
-                if #available(iOS 11.3, *) {
-                    debugPrint(SecCopyErrorMessageString(status, nil))
-                } else {
-                    // Fallback on earlier versions
-                }
                 throw KeychainError.unhandledError(status: status)
             }
         }
@@ -112,13 +108,11 @@ public struct KeychainPasswordItem {
             
             // Throw an error if an unexpected status was returned.
             guard status == noErr else {
-                if #available(iOS 11.3, *) {
-                    debugPrint(SecCopyErrorMessageString(status, nil))
-                } else {
-                    // Fallback on earlier versions
-                }
                 throw KeychainError.unhandledError(status: status)
             }
+        }
+        catch KeychainError.platformNotSupported {
+            debugPrint("Platform not supported, skipping password persistence")
         }
     }
     
