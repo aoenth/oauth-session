@@ -54,7 +54,14 @@ public struct KeychainPasswordItem {
         
         // Check the return status and throw an error if appropriate.
         guard status != errSecItemNotFound else { throw KeychainError.noPassword }
-        guard status == noErr else { throw KeychainError.unhandledError(status: status) }
+        guard status == noErr else {
+            if #available(iOS 11.3, *) {
+                debugPrint(SecCopyErrorMessageString(status, nil))
+            } else {
+                // Fallback on earlier versions
+            }
+            throw KeychainError.unhandledError(status: status)
+        }
         
         // Parse the password string from the query result.
         guard let existingItem = queryResult as? [String : AnyObject],
