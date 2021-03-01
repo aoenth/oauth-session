@@ -97,7 +97,10 @@ public struct KeychainPasswordItem {
             let status = SecItemAdd(newItem as CFDictionary, nil)
             
             // Throw an error if an unexpected status was returned.
-            guard status == noErr else { throw KeychainError.unhandledError(status: status) }
+            guard status == noErr else {
+                debugPrint(SecCopyErrorMessageString(status, nil))
+                throw KeychainError.unhandledError(status: status)
+            }
         }
     }
     
