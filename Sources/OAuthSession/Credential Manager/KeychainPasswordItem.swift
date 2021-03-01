@@ -83,7 +83,14 @@ public struct KeychainPasswordItem {
             let status = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
             
             // Throw an error if an unexpected status was returned.
-            guard status == noErr else { throw KeychainError.unhandledError(status: status) }
+            guard status == noErr else {
+                if #available(iOS 11.3, *) {
+                    debugPrint(SecCopyErrorMessageString(status, nil))
+                } else {
+                    // Fallback on earlier versions
+                }
+                throw KeychainError.unhandledError(status: status)
+            }
         }
         catch KeychainError.noPassword {
             /*
