@@ -98,7 +98,11 @@ public struct KeychainPasswordItem {
             
             // Throw an error if an unexpected status was returned.
             guard status == noErr else {
-                debugPrint(SecCopyErrorMessageString(status, nil))
+                if #available(iOS 11.3, *) {
+                    debugPrint(SecCopyErrorMessageString(status, nil))
+                } else {
+                    // Fallback on earlier versions
+                }
                 throw KeychainError.unhandledError(status: status)
             }
         }
